@@ -12,9 +12,7 @@ Isos = [132.7,86.5,139.6]      # Isotropisation temperature in degrees C (set to
 Concs,Melt,Clear = Eutectic.DoPhaseDiagram(Melts,Isos,Enthalp) # calculate phase diagram
 
 ~~~
-~~~
 ![image](https://github.com/RichardMandle/Eutectic/assets/101199234/db939071-01c3-4b63-82e8-6a5c7f34e943)
-~~~
 ~~~
 Eutectic.PrintComposition(Concs,Melts,Clear)                   # print eutectic composition
 ~~~
