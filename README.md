@@ -1,6 +1,9 @@
 # Eutectic
 Calculates phase diagram and eutectic composition of n-component mixtures of liquid crystalline materials.
 
+# Issues
+Plotting limited to 2- or 3- component systems; visualising 4> is wild.
+
 # Usage
 Give it some data:
 ~~~
