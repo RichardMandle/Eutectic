@@ -2,7 +2,7 @@
 Calculates phase diagram and eutectic composition of n-component mixtures of liquid crystalline materials.
 
 # Issues
-Plotting limited to 2- or 3- component systems; visualising 4> is wild.
+Reliable plotting limited to 2- or 3- component systems; visualising 4 component systems is tricky, 5-components and above is wild
 
 # Usage
 Give it some data:
