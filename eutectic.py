@@ -369,8 +369,8 @@ def plot_phase_diagram(concentrations, melt_points, clear_points):
         plot_concs, plot_melts, plot_clear = get_random_subset(concentrations, melt_points, clear_points, 20)
         sct1 = plot_3d_tern(ax1, plot_concs, plot_melts, 0.05)
         cb1 = fig.colorbar(sct1, orientation='horizontal', label='Melting Point / °C', shrink=0.5)
-        cb1.set_alpha(1)
-        cb1.draw_all()
+        #cb1.set_alpha(1)
+        #cb1.draw_all() # not needed in latest version of mpl?
         ax1.axis('off')
 
 
@@ -379,8 +379,8 @@ def plot_phase_diagram(concentrations, melt_points, clear_points):
         label_points(ax2)
         sct2 = plot_3d_tern(ax2, plot_concs, plot_clear, 0.05)
         cb2 = fig.colorbar(sct2, orientation='horizontal', label='Clearing Point / °C', shrink=0.5)
-        cb2.set_alpha(1)
-        cb2.draw_all()
+        #cb2.set_alpha(1)
+        #cb2.draw_all()
         ax2.axis('off')
         plt.show()
 
