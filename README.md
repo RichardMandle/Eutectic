@@ -1,122 +1,137 @@
 # Eutectic
-Calculates phase diagram and eutectic composition of n-component mixtures of liquid crystalline materials. 
+Calculates phase diagram and eutectic composition of n-component mixtures of liquid crystalline (and other) materials. 
 
-Takes melting points (degrees C), enthalpies (kJ mol^-1) and some other phase transition temperature (e.g. N-Iso, SmA-N_F). Generates a large number of possible concentrations and evaluates the melting point and clearing point of each _via_ the method described by E.P.Raynes _et al_ in DOI: 10.1039/C39740000098
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [eutectic.py](#eutecticpy)
+  - [mix_scout.py](#mix_scoutpy)
+- [Examples](#examples)
+- [Background](#background)
 
-Plotting: with 2-components gives you get a simple scatter diagram; with 3-components you get a triangular ternary colourmap plot; with 4-components you get a sort of 3D pyramidal scatter plot with colour and alpha mapping. With 5+ components ye get nowt.
+## Features
+- **Calculate and display phase diagrams** for 2, 3, or 4-component systems.
+- **Find eutectic points** and print their compositions.
+- **Plot phase diagrams** with automatic handling of different component numbers.
+- **Interactive command-line interface** for inputting data.
+- **Automated mixture scouting** with `mix_scout.py` to find optimal mixtures from a dataset.
+- **Can estimate the eutectic point for a mixture of _any_ number of components
 
-# Issues
-Reliable plotting limited to 2- or 3- component systems; visualising 4 component systems is sub-optimal, 5-components and above is wild.
+## Requirements
+- Python 3.6 or higher
+- Libraries:
+  - `numpy`
+  - `matplotlib`
+  - `pandas` (for `mix_scout.py`)
+  - `tqdm` (for `mix_scout.py`)
+  - 
+## Installation
+Clone the repository and install the required libraries:
 
-# Future Plans
-Ability to plot a 'slice' through 3+ component data by fixing one or more concentrations; reduces the dimensionality. 
+```
+git clone https://github.com/yourusername/eutectic-phase-diagram.git
+cd eutectic-phase-diagram
+pip install -r requirements.txt
+```
 
-# Usage
-Give it some data:
-_2-components_
-Here we'll use data for RM734 and RM734-F (10.1002/chem.201702742) and a few other favorites to find the eutectic composition and a enantiotropic NF material:
+Alternatively, install the required libraries manually:
 
-~~~
-import Eutectic 
-Melts = [139.8, 165.24] # melting points, in degrees C
-Enthalp = [29.89,50.06] # enthalpy of fusion, in kJ mol-1
-Isos = [132.7,139.6]    # Nf-N temperature in degrees C
+```pip install numpy matplotlib pandas tqdm```
 
-mix_concs,mix_melt,mix_transition = Eutectic.DoPhaseDiagram(Melts,Nf2N,Enthalp) # calculate phase diagram
+## Usage
+This script calculates phase diagrams and eutectic points based on user-provided data. You can either run it from ```eutectic.py```, which will prompt you for input (enter values for melting point, enthalpy and clearing-point for each materal, separated by commas)
+## eutectic.py
+**Running the Script**
+Run the script from the command line:
+```python eutectic.py```
+**Input Data**
+The script will prompt you to input the following data:
 
-~~~
-![image](https://github.com/RichardMandle/Eutectic/assets/101199234/21a105c3-ef73-4047-9860-0fdfcc4905d6)
-~~~
-Eutectic.PrintComposition(mix_concs,mix_melt,mix_transition)
-~~~
-~~~
-eutectic composition:
-0.741 mol% A
-0.259 mol% B
-Melting point: [126.03] °C
-Clearing point: 134.49 °C
-enantiotropic range = 8.46 °C
-~~~
+* Melting points (in °C): Enter the melting points of each component, separated by commas.
+* Enthalpies of fusion (in kJ/mol): Enter the enthalpies of fusion for each component, separated by commas.
+* Clearing points (in °C): Enter the clearing points (isotropic transition temperatures) for each component, separated by commas.
+* Note: Ensure that all inputs have the same number of components.
 
-_3-components_
-~~~
-import Eutectic 
-Melts = [139.8, 139.0, 165.24] # melting points, in degrees C
-Enthalp = [29.89,34.79,50.06]  # enthalpy of fusion, in kJ mol-1
-Isos = [132.7,86.5,139.6]      # Isotropisation temperature in degrees C (set to -273.15 for non LC)
+Example Input
+```
+Please input melting points (°C), separated by commas: 100, 50
+Please input enthalpies of fusion (kJ/mol), separated by commas: 30, 20
+Please input clearing points (°C), separated by commas: 120, 60
+```
+This then produces a plot:<br>
+![image](https://github.com/user-attachments/assets/83f170a8-fa54-4751-9fcd-75693a06032a)<br><br>
+and data on the composition is returned to the terminal window:<br>
+![image](https://github.com/user-attachments/assets/8590faa4-ef2b-44be-b65f-b24881288aec)<br><br>
 
-mix_concs,mix_melt,mix_transition = Eutectic.DoPhaseDiagram(Melts,Nf2N,Enthalp) # calculate phase diagram
+The code executes a few functions internally:<br>
+* make_phase_diagram(): Calculates the phase diagram based on provided data.
+* plot_phase_diagram(): Plots the phase diagram for 2 or 3-component systems.
+* print_composition(): Prints the eutectic composition and related data.
+<br>
+## mix_scout.py
+This script automates the search for optimal mixtures from a dataset of pure compounds. It evaluates many combinations of compounds to find mixtures with desired properties, such as low melting points
 
-~~~
-![image](https://github.com/RichardMandle/Eutectic/assets/101199234/db939071-01c3-4b63-82e8-6a5c7f34e943)
-~~~
-Eutectic.PrintComposition(Concs,Melts,Clear)                   # print eutectic composition
-~~~
-~~~
-eutectic composition:
-0.464 mol% A
-0.418 mol% B
-0.119 mol% C
-Melting point: 106.35 °C
-Clearing point: 114.23 °C
-enantiotropic range = 7.88 °C
-~~~
+Command-Line Arguments
+Run the script with the following options:
 
-_4-components_
-~~~
-import Eutectic 
-Melts = [139.8, 62.2, 37.2, 99.7]
-Enthalp = [29.89,24.12,20.6, 27.5]
-Nf2N = [132.7,78.5,15.4, 68]
+```
+python mix_scout.py -i compounds.csv -mp 100 -n 2 -s 10000
+-i, --input: Path to the CSV file containing compound data.
+-mp, --max_melt: Maximum acceptable melting point for mixtures (default: 100°C).
+-n, --max_comps: Maximum number of components in a mixture (default: 2).
+-s, --search_size: Number of points to evaluate per mixture (default: 10,000).
+```
+** Input Data File **
+Prepare a CSV file (e.g., compounds.csv) with the following format (no header):
 
-mix_concs,mix_melt,mix_transition = Eutectic.DoPhaseDiagram(Melts,Nf2N,Enthalp)
-~~~
-![image](https://github.com/RichardMandle/Eutectic/assets/101199234/7ba94d00-5331-4471-bdda-6b1f773d794b)
-~~~
-Eutectic.PrintComposition(mix_concs,mix_melt,mix_transition)
-~~~
-~~~
-eutectic composition:
-0.028 mol% A
-0.278 mol% B
-0.614 mol% C
-0.08 mol% D
-Melting point: [19.35] °C
-Clearing point: 40.41 °C
-enantiotropic range = 21.06 °C
-~~~
+```
+Compound A, Melting Point A, Clearing Point A, Enthalpy A
+Compound B, Melting Point B, Clearing Point B, Enthalpy B
+```
 
-_>5-components_
+Columns:
+* Compound Name
+* Melting Point (°C)
+* Clearing Point (°C)
+* Enthalpy of Fusion (kJ/mol)
 
-~~~
-import Eutectic 
-Melts =   [139.8, 139.0, 155.2, 164.7, 138.8, 143.3, 143.2, 141.8, 165.24]
-Enthalp = [29.89, 34.79, 33.12, 28.79, 38.75, 36.05, 40.61, 43.66, 50.06]
-Nf2N = [132.7, 86.5, 42.6, 66.1, 32.7, 91, 77.6, 117.1, 139.56 ]
+Example CSV Content:
+```
+Compound1, 100, 120, 30
+Compound2, 50, 60, 20
+Compound3, 80, 110, 25
+```
+** Output **
+The script will evaluate all possible combinations up to the specified maximum number of components and output the mixtures that meet the criteria. It prints:
+* The lowest melting point mixture.
+* The highest clearing point mixture.
+* The mixture with the widest enantiotropic range.
 
-mix_concs,mix_melt,mix_transition = Eutectic.DoPhaseDiagram(Melts,Nf2N,Enthalp)
-~~~
-~~~
-Eutectic.PrintComposition(mix_concs,mix_melt,mix_transition)
+** Functions **
+* initialize(): Parses command-line arguments.
+* load_compound_data(): Loads compound data from a CSV file.
+* generate_combinations(): Generates all possible combinations of compounds.
+* evaluate_combinations(): Evaluates each combination to find suitable mixtures.
 
-Not plotting; 9 components
-eutectic composition:
-0.184 mol% A
-0.161 mol% B
-0.121 mol% C
-0.107 mol% D
-0.09 mol% E
-0.129 mol% F
-0.092 mol% G
-0.088 mol% H
-0.028 mol% I
-Melting point: [76.23] °C
-Clearing point: 86.64 °C
-enantiotropic range = 10.4 °C
-~~~
-
-# Data Export
-We can write the data to .csv for later retrieval like this:
-~~~
-Eutectic.SaveData(mix_concs,mix_melt,mix_transition,'MyEutecticData.csv')
-~~~
+## Examples
+** Using ```eutectic.py```
+* Run the script:
+```python eutectic.py```
+* Input data when prompted:
+```
+Please input melting points (°C), separated by commas: 100, 80, 60
+Please input enthalpies of fusion (kJ/mol), separated by commas: 30, 25, 20
+Please input clearing points (°C), separated by commas: 120, 110, 90
+```
+* View the generated phase diagram and compoisition:
+```
+Eutectic composition:
+14.286% Component A
+42.857% Component B
+42.857% Component C
+Melting point: 52.5 °C
+Clearing point: 96.43 °C
+Enantiotropic range: 43.93 °C
+```
+etc
