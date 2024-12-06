@@ -129,7 +129,7 @@ if __name__ == "__main__":
         melt = 9999 # use some large/small values for melt/high/wide; we use these to track the lowest melting point, highest clearing point and widest phase range in loops later.
         wide = high = -9999
         
-        lowest_melt, widest_range =[], []
+        highest_point, lowest_melt, widest_range =[], [], []
         print('Found ' + str(len(good_mixtures)) + ' suitable mixtures!')
         
         for mixture in good_mixtures:
