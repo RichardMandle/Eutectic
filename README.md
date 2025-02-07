@@ -30,7 +30,7 @@ Calculates phase diagram and eutectic composition of n-component mixtures of liq
 Clone the repository and install the required libraries:
 
 ```
-git clone https://github.com/yourusername/eutectic-phase-diagram.git
+git clone https://github.com/RichardMandle/eutectic-phase-diagram.git
 cd eutectic-phase-diagram
 pip install -r requirements.txt
 ```
