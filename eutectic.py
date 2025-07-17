@@ -80,7 +80,7 @@ def make_phase_diagram(melting_points, enthalpy_fusion, clearing_points,
     melt_points = np.max(dH_fusion_J / ((dH_fusion_J / T_melt_K) - R * np.log(concentrations)), axis=1) - 273.15
     clear_points = np.sum(T_clear_C * concentrations, axis=1)
     
-    print_composition(concentrations, melt_points, clear_points)
+    print_composition(concentrations, melt_points, clear_points, quiet = False)
     
     if plotting:
         plot_phase_diagram(concentrations, melt_points, clear_points, quat_plot_style)
