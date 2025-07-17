@@ -52,7 +52,7 @@ def label_pyramidal_axes():
         mlab.text3d(t / 2, t * np.sqrt(3) / 2, 0, f'{t:.2f}', scale=0.05, color=(0, 0, 0))
         mlab.text3d(0.5, 0.28867513, 0.81649658 * t, f'{t:.2f}', scale=0.05, color=(0, 0, 0))
 
-def mvi_quat_scatter(c, m):
+def mvi_quat_scatter(c, m, i):
     '''
     scatter plot for quaternary phase diagram.
 
@@ -78,7 +78,7 @@ def mvi_quat_scatter(c, m):
 
     mlab.show()
 
-def mvi_quat_isosurf(c, m):
+def mvi_quat_isosurf(c, m, i):
     '''
     quaternary isosurface using mayavi.
 

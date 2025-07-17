@@ -22,7 +22,7 @@ def parse_args():
     parser.add_argument('-i', '--input', required=True, type=str, help='CSV file with compound data')
     parser.add_argument('-mp', '--max_melt', default=100.0, type=float, help='Maximum acceptable melt temperature (deg C)')
     parser.add_argument('-n', '--max_comps', default=2, type=int, help='Maximum number of components in mixture')
-    parser.add_argument('-s', '--search_size', default=10000, type=int, help='Base number of search points per mixture')
+    parser.add_argument('-s', '--search_size', default=50000, type=int, help='Base number of search points per mixture')
     parser.add_argument('--export', type=str, help='Optional CSV filename to export good mixtures')
     return parser.parse_args()
 
@@ -50,8 +50,6 @@ def evaluate_combinations(compounds, args):
 
     for combo in tqdm(combos, desc="Evaluating combinations"):
         mp = compounds.loc[list(combo), 'Melting Point'].values
-        if np.min(mp) > args.max_melt:
-            continue
 
         enthalpies = compounds.loc[list(combo), 'Enthalpy'].values
         t_clear = compounds.loc[list(combo), 'T_Niso'].values

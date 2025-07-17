@@ -37,7 +37,7 @@ def save_data(concentrations, melt_points, clear_points, filename='EutecticData.
     print(f'Saved data to: {filename}')
     return
 
-def print_composition(concentrations, melt_points, clear_points, quiet=False):
+def print_composition(concentrations, melt_points, clear_points, quiet=True):
     
     # Prints eutectic composition and phase transition data.
     
